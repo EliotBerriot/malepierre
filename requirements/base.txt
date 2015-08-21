@@ -37,6 +37,6 @@ django-redis==4.2.0
 redis>=2.10.0
 
 djangorestframework
-
+django-cors-headers
 
 # Your custom requirements go here
