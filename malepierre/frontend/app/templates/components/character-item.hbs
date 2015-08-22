@@ -1,6 +1,10 @@
 <li>
-    <h2>{{character.name}}</h2>
+    <h2>{{#link-to 'character.index' character}}{{character.name}}{{/link-to}}</h2>
     <div class="background">
         {{character.background}}
     </div>
+    {{#if expanded}}
+        <button {{action "delete" character}} class="destroy">Delete</button>
+    {{/if}}
+
 </li>
