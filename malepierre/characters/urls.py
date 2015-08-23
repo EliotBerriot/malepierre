@@ -14,7 +14,12 @@ talents_patterns = [
     url(r'^$', views.TalentList.as_view(), name="index"),
 ]
 
+skills_patterns = [
+    url(r'^$', views.SkillList.as_view(), name="index"),
+]
+
 urlpatterns = [
     url(r'^careers/', include(careers_patterns, namespace='careers')),
     url(r'^talents/', include(talents_patterns, namespace='talents')),
+    url(r'^skills/', include(skills_patterns, namespace='skills')),
 ]

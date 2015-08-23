@@ -11,6 +11,19 @@
             <div class="description">
                 <p>{{ talent.description }}</p>
             </div>
+            {% if talent.linked_skills.all.count %}
+                <div class="skills">
+                    <h4>{% trans 'Linked skills' %}</h4>
+                    <ul class="list-inline">
+                        {% for skill in talent.linked_skills.all %}
+                            <li>
+
+                                <a href="{{ skill.get_absolute_url }}">{{ skill.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         </article>
     {% endfor %}
 {% endblock content %}

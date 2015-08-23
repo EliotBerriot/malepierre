@@ -21,6 +21,36 @@ class Command(BaseCommand):
 
             self.stdout.write('Loaded {0} talent'.format(instance.code))
 
+
+        self.stdout.write('\nLoading skills...')
+
+        for row in data.skills.DATA:
+            try:
+                instance = models.Skill.objects.get(code=row['code'])
+            except models.Skill.DoesNotExist:
+                instance = models.Skill()
+
+            declinations = row.pop('declinations', [])
+            linked_talents = row.pop('linked_talents', [])
+            linked_skill = row.pop('linked_skill', None)
+
+            for field in row:
+                setattr(instance, field, row[field])
+
+
+            instance.save()
+
+            talents = models.Talent.objects.filter(code__in=linked_talents)
+            instance.linked_talents.add(*talents)
+
+            for code, name in declinations:
+                d_instance, _ = models.Skill.objects.get_or_create(code=code, linked_skill=instance)
+                d_instance.name = '{0} ({1})'.format(instance.name, name)
+                d_instance.save()
+                self.stdout.write('Loaded {0} skill declination'.format(d_instance.code))
+
+            self.stdout.write('Loaded {0} skill'.format(instance.code))
+
         self.stdout.write('\nloading careers...')
 
         for row in data.careers.DATA:

@@ -15,3 +15,7 @@ class CareerList(generic.ListView):
 class TalentList(generic.ListView):
     queryset = models.Talent.objects.all()
     template_name = 'characters/talents/list.html'
+
+class SkillList(generic.ListView):
+    queryset = models.Skill.objects.all()
+    template_name = 'characters/skills/list.html'

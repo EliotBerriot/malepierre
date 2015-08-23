@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans 'Skill' %}{% endblock %}
+
+{% block content %}
+
+    {% for skill in object_list %}
+        {% if not skill.linked_skill %}
+            <article id="{{ skill.code }}">
+                <h3>{{ skill.name }}</h3>
+
+                {% if skill.description %}
+                    <div class="description">
+                        <p>{{ skill.description }}</p>
+                    </div>
+                {% endif %}
+                {% if skill.linked_talents.all.count %}
+                    <div class="talents">
+                        <h4>{% trans 'Linked talents' %}</h4>
+                        <ul class="list-inline">
+                            {% for talent in skill.linked_talents.all %}
+                                <li>
+
+                                    <a href="{{ talent.get_absolute_url }}">{{ talent.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </article>
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

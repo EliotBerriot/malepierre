@@ -30,6 +30,7 @@ class Character(NameMixin):
     background = models.TextField(null=True, blank=True)
     creation_date = models.DateTimeField(default=timezone.now)
 
+
 class Talent(CodeMixin, NameMixin, DescriptionMixin):
 
     def get_absolute_url(self):
@@ -41,6 +42,31 @@ class TalentSet(models.Model):
 
     class Meta:
         unique_together = ('talent0', 'talent1')
+
+
+class Skill(CodeMixin, NameMixin, DescriptionMixin):
+
+    ATTRIBUTE_CHOICES = (
+        ('strength', 'Strength'),
+        ('constitution', 'Constitution'),
+        ('agility', 'Agility'),
+        ('intelligence', 'Intelligence'),
+        ('mental_strength', 'Mental strength'),
+        ('sociability', 'Sociability'),
+    )
+
+    TYPE_CHOICES = (
+        ('base', 'Base'),
+        ('advanced', 'Advanced'),
+    )
+    attribute = models.CharField(choices=ATTRIBUTE_CHOICES, max_length=30, blank=True, null=True)
+    type = models.CharField(choices=TYPE_CHOICES, max_length=30, default='base')
+    linked_talents = models.ManyToManyField(Talent, blank=True, related_name='linked_skills')
+    linked_skill = models.ForeignKey('self', null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('skills:index') + '#{0}'.format(self.code)
+
 
 class Career(CodeMixin, NameMixin, DescriptionMixin):
 

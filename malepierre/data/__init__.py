@@ -1,1 +1,1 @@
-from . import careers, talents
+from . import careers, talents, skills
