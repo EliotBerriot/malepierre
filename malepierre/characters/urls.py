@@ -9,6 +9,12 @@ from . import views
 careers_patterns = [
     url(r'^$', views.CareerList.as_view(), name="index"),
 ]
+
+talents_patterns = [
+    url(r'^$', views.TalentList.as_view(), name="index"),
+]
+
 urlpatterns = [
     url(r'^careers/', include(careers_patterns, namespace='careers')),
+    url(r'^talents/', include(talents_patterns, namespace='talents')),
 ]

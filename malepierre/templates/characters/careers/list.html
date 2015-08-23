@@ -6,7 +6,7 @@
 {% block content %}
 
     {% for career in object_list %}
-        <article>
+        <article id="{{ career.code }}">
             <h3>{{ career.name }}</h3>
 
             <div class="row">
@@ -56,6 +56,14 @@
                             <td>{% pretty_integer 0 %}</td>
                         </tr>
                     </table>
+                    <div class="exits">
+                        <h4>{% trans 'Exits' %}</h4>
+                        <ul class="list-inline">
+                            {% for exit in career.exits.all %}
+                                <li><a href="{{ exit.get_absolute_url }}">{{ exit.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </article>

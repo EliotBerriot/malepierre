@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans 'Talents' %}{% endblock %}
+
+{% block content %}
+
+    {% for talent in object_list %}
+        <article id="{{ talent.code }}">
+            <h3>{{ talent.name }}</h3>
+            <div class="description">
+                <p>{{ talent.description }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

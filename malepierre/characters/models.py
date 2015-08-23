@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 
 class CodeMixin(models.Model):
@@ -16,6 +17,8 @@ class NameMixin(models.Model):
         abstract = True
         ordering = ('name',)
 
+    def __str__(self):
+        return self.name
 
 class DescriptionMixin(models.Model):
     description = models.TextField(null=True, blank=True)
@@ -32,8 +35,7 @@ class Character(NameMixin):
 
 class Career(CodeMixin, NameMixin, DescriptionMixin):
 
-    access = models.ManyToManyField('self')
-    exits = models.ManyToManyField('self')
+    exits = models.ManyToManyField('self', blank=True, symmetrical=False)
 
     # main profile
     cc = models.IntegerField(default=0)
@@ -50,3 +52,10 @@ class Career(CodeMixin, NameMixin, DescriptionMixin):
     wounds = models.IntegerField(default=0)
     movement = models.IntegerField(default=0)
     magic = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('careers:index') + '#{0}'.format(self.code)
+
+
+class Talent(CodeMixin, NameMixin, DescriptionMixin):
+    pass
