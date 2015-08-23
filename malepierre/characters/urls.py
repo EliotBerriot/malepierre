@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.conf import settings
+from django.conf.urls import include, url
+
+from . import views
+
+careers_patterns = [
+    url(r'^$', views.CareerList.as_view(), name="index"),
+]
+urlpatterns = [
+    url(r'^careers/', include(careers_patterns, namespace='careers')),
+]

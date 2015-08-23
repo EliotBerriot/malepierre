@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'malepierre',
     'malepierre.users',  # custom users app
     'malepierre.characters',
     # Your stuff: custom apps go here
@@ -79,9 +80,9 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
-FIXTURE_DIRS = (
-    str(APPS_DIR.path('fixtures')),
-)
+# FIXTURE_DIRS = (
+#     str(APPS_DIR.path('fixtures')),
+# )
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------

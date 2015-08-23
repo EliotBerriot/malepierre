@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static i18n malepierre %}
+
+{% block title %}{% trans 'Careers' %}{% endblock %}
+
+{% block content %}
+
+    {% for career in object_list %}
+        <article>
+            <h3>{{ career.name }}</h3>
+
+            <div class="row">
+                <div class="description col-xs-12 col-md-3">
+                    <p>{{ career.description }}</p>
+                </div>
+                <div class="data col-xs-12 col-md-9">
+                    <table class="table profile">
+                        <tr>
+                            <th>{% trans 'CC' %}</th>
+                            <th>{% trans 'CT' %}</th>
+                            <th>{% trans 'Strength' %}</th>
+                            <th>{% trans 'Constitution' %}</th>
+                            <th>{% trans 'Agility' %}</th>
+                            <th>{% trans 'Intelligence' %}</th>
+                            <th>{% trans 'Mental strength' %}</th>
+                            <th>{% trans 'Sociability' %}</th>
+                        </tr>
+                        <tr>
+                            <td>{% pretty_integer career.cc after='%' %}</td>
+                            <td>{% pretty_integer career.ct after='%' %}</td>
+                            <td>{% pretty_integer career.strength after='%' %}</td>
+                            <td>{% pretty_integer career.constitution after='%' %}</td>
+                            <td>{% pretty_integer career.agility after='%' %}</td>
+                            <td>{% pretty_integer career.intelligence after='%' %}</td>
+                            <td>{% pretty_integer career.mental_strength after='%' %}</td>
+                            <td>{% pretty_integer career.sociability after='%' %}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans 'Attacks' %}</th>
+                            <th>{% trans 'Wounds' %}</th>
+                            <th>{% trans 'Strength bonus' %}</th>
+                            <th>{% trans 'Constitution bonus' %}</th>
+                            <th>{% trans 'Movement' %}</th>
+                            <th>{% trans 'Magic' %}</th>
+                            <th>{% trans 'Madness points' %}</th>
+                            <th>{% trans 'Destiny points' %}</th>
+                        </tr>
+                        <tr>
+                            <td>{% pretty_integer career.attacks %}</td>
+                            <td>{% pretty_integer career.wounds %}</td>
+                            <td>{% pretty_integer 0 %}</td>
+                            <td>{% pretty_integer 0 %}</td>
+                            <td>{% pretty_integer career.movement %}</td>
+                            <td>{% pretty_integer career.magic %}</td>
+                            <td>{% pretty_integer 0 %}</td>
+                            <td>{% pretty_integer 0 %}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
