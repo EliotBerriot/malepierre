@@ -21,7 +21,7 @@ class Command(BaseCommand):
 
             self.stdout.write('Loaded {0} talent'.format(instance.code))
 
-        self.stdout.write('Loading careers...')
+        self.stdout.write('\nloading careers...')
 
         for row in data.careers.DATA:
             try:
@@ -30,11 +30,30 @@ class Command(BaseCommand):
                 instance = models.Career()
 
             exits = models.Career.objects.filter(code__in=row.pop('exits', []))
+            talents = row.pop('talents', [])
+
+            # exits
+
             for field in row:
                 setattr(instance, field, row[field])
             instance.save()
 
             instance.exits.add(*exits)
+
+            # talents
+            for talent_set in talents:
+
+                splitted_talents = talent_set.split('|')
+                kw = {
+                    'talent0': models.Talent.objects.get(code=splitted_talents[0])
+                }
+                if len(splitted_talents) > 1:
+                    kw['talent1'] = models.Talent.objects.get(code=splitted_talents[1])
+
+                ts, _ = models.TalentSet.objects.get_or_create(**kw)
+
+                instance.talents.add(ts)
+
 
             self.stdout.write('Loaded {0} career'.format(instance.code))
 

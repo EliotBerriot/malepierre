@@ -45,5 +45,6 @@ DATA = [
         'attacks': 0,
         'wounds': 2,
         'exits': ['initiate'],
+        'talents': ['calcul-mental|grand-voyageur', 'etiquette|linguistique', 'intelligent|sociable']
     }
 ]
