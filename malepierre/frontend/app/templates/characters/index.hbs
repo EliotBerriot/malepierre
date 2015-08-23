@@ -1,7 +1,0 @@
-<ul id="character-list">
-    {{#each character in model}}
-        {{character-item character=character delete="delete"}}
-    {{/each}}
-</ul>
-{{input type="text" id="new-character" placeholder="Create a new character"
-    value=name action="create"}}
