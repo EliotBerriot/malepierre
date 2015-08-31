@@ -57,7 +57,7 @@ DATA = [
         'linked_talents': ['code-de-la-rue', 'etiquette'],
     },
     {
-        'code': 'conduite-datellages',
+        'code': 'conduite-dattelages',
         'name': 'Conduite d’attelages',
         'type': 'base',
         'attribute': 'strength',

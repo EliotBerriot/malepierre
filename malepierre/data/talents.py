@@ -215,6 +215,11 @@ DATA = [
         'code': 'magie-commune',
         'name': 'Magie commune',
         'description': 'Vous connaissez la plus élémentaire des formes de magie. Comme Science de la magie, il ne s’agit pas d’une compétence unique, mais d’un ensemble de compétences. Chaque talent de Magie commune correspond à la maîtrise d’une forme de magie, cette spécialité étant indiquée entre parenthèses. Par exemple, Magie commune (occulte) est différent de Magie commune (divine). Les formes de Magie commune les plus répandues sont les suivantes : divine, occulte et vulgaire. Si vous avez un talent de Magie commune et au moins 1 dans la caractéristique de Magie,vous pouvez tenter de lancer n’importe quel sort dépendant de cette forme de magie. Reportez-vous au Chapitre 7 : La magie,pour connaître la liste des sorts et autres détails.',
+        'declinations': [
+            ('divine', 'Divine'),
+            ('occulte', 'Occulte'),
+            ('vulgaire', 'Vulgaire'),
+        ],
     },
     {
         'code': 'magie-mineure',

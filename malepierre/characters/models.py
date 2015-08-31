@@ -20,6 +20,12 @@ class NameMixin(models.Model):
     def __str__(self):
         return self.name
 
+class AbstractSet(models.Model):
+    max_choices = models.IntegerField(default=1)
+
+    class Meta:
+        abstract = True
+
 class DescriptionMixin(models.Model):
     description = models.TextField(null=True, blank=True)
     class Meta:
@@ -32,17 +38,13 @@ class Character(NameMixin):
 
 
 class Talent(CodeMixin, NameMixin, DescriptionMixin):
+    linked_talent = models.ForeignKey('self', null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('talents:index') + '#{0}'.format(self.code)
 
-class TalentSet(models.Model):
-    talent0 = models.ForeignKey(Talent, related_name='talentsets_0')
-    talent1 = models.ForeignKey(Talent, null=True, blank=True, related_name='talentsets_1')
-
-    class Meta:
-        unique_together = ('talent0', 'talent1')
-
+class TalentSet(AbstractSet):
+    choices = models.ManyToManyField(Talent, related_name='talentsets')
 
 class Skill(CodeMixin, NameMixin, DescriptionMixin):
 
@@ -68,12 +70,9 @@ class Skill(CodeMixin, NameMixin, DescriptionMixin):
         return reverse('skills:index') + '#{0}'.format(self.code)
 
 
-class SkillSet(models.Model):
-    skill0 = models.ForeignKey(Skill, related_name='skillsets_0')
-    skill1 = models.ForeignKey(Skill, null=True, blank=True, related_name='skillsets_1')
+class SkillSet(AbstractSet):
+    choices = models.ManyToManyField(Skill, related_name='skillsets')
 
-    class Meta:
-        unique_together = ('skill0', 'skill1')
 
 class Career(CodeMixin, NameMixin, DescriptionMixin):
 
