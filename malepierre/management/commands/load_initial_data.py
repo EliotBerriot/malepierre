@@ -61,6 +61,7 @@ class Command(BaseCommand):
 
             exits = models.Career.objects.filter(code__in=row.pop('exits', []))
             talents = row.pop('talents', [])
+            skills = row.pop('skills', [])
 
             # exits
 
@@ -84,6 +85,20 @@ class Command(BaseCommand):
 
                 instance.talents.add(ts)
 
+
+            # skills
+            for skill_set in skills:
+
+                splitted_skills = skill_set.split('|')
+                kw = {
+                    'skill0': models.Skill.objects.get(code=splitted_skills[0])
+                }
+                if len(splitted_skills) > 1:
+                    kw['skill1'] = models.Skill.objects.get(code=splitted_skills[1])
+
+                ts, _ = models.SkillSet.objects.get_or_create(**kw)
+
+                instance.skills.add(ts)
 
             self.stdout.write('Loaded {0} career'.format(instance.code))
 

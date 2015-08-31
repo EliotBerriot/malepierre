@@ -9,7 +9,7 @@ class CharacterViewSet(viewsets.ModelViewSet):
     queryset = models.Character.objects.all()
 
 class CareerList(generic.ListView):
-    queryset = models.Career.objects.all()
+    queryset = models.Career.objects.all().order_by('code')
     template_name = 'characters/careers/list.html'
 
 class TalentList(generic.ListView):

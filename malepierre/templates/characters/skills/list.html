@@ -10,6 +10,13 @@
             <article id="{{ skill.code }}">
                 <h3>{{ skill.name }}</h3>
 
+                <dl class="dl">
+                    <dt>{% trans 'Attribute' %}</dt>
+                    <dd>{{ skill.get_attribute_display }}</dd>
+                    <dt>{% trans 'Type' %}</dt>
+                    <dd>{{ skill.get_type_display }}</dd>
+                </dl>
+
                 {% if skill.description %}
                     <div class="description">
                         <p>{{ skill.description }}</p>

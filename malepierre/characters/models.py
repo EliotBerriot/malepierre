@@ -68,10 +68,18 @@ class Skill(CodeMixin, NameMixin, DescriptionMixin):
         return reverse('skills:index') + '#{0}'.format(self.code)
 
 
+class SkillSet(models.Model):
+    skill0 = models.ForeignKey(Skill, related_name='skillsets_0')
+    skill1 = models.ForeignKey(Skill, null=True, blank=True, related_name='skillsets_1')
+
+    class Meta:
+        unique_together = ('skill0', 'skill1')
+
 class Career(CodeMixin, NameMixin, DescriptionMixin):
 
     exits = models.ManyToManyField('self', blank=True, symmetrical=False)
     talents = models.ManyToManyField(TalentSet, blank=True)
+    skills = models.ManyToManyField(SkillSet, blank=True)
 
     # main profile
     cc = models.IntegerField(default=0)
