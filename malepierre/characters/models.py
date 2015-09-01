@@ -26,6 +26,9 @@ class AbstractSet(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return '/'.join([choice.name for choice in self.choices.all()])
+
 class DescriptionMixin(models.Model):
     description = models.TextField(null=True, blank=True)
     class Meta:

@@ -16,18 +16,52 @@ class Command(BaseCommand):
         make_option('--careers',
             action='store_true',
             help='Load careers'),
+        make_option('--wipe',
+            action='store_true',
+            help='Wipe data before importing'),
     )
 
     def parse_set(self, string):
         names = string.split('|')
         first_name = names[0].split(':')
         choice = 1
+        prepend = []
         if len(first_name) > 1:
-            first_name = first_name[-1]
             choice = int(first_name[0])
-        return choice, [name for name in names]
+            prepend.append(first_name[-1])
+
+        return choice, prepend + [name for name in names]
+
+    def filter_multiple_many(self, qs, iterable, attr="choices"):
+        for e in iterable:
+            qs = qs.filter(**{attr: e})
+        return qs
+
+    def load_set(self, element_set, model, set_model):
+
+        max_choices, names = self.parse_set(element_set)
+        kw = {'max_choices': max_choices}
+        choices = model.objects.filter(code__in=names)
+
+        print(names, choices)
+        if len(choices) != len(names):
+            self.stdout.write('Warning: could not find all names: {0} {1}'.format(element_set, model))
+        try:
+            queryset = self.filter_multiple_many(set_model.objects.all(), choices)
+            ts = queryset.get(max_choices=max_choices)
+        except set_model.DoesNotExist:
+
+            ts = set_model(max_choices=max_choices)
+            ts.save()
+        ts.choices.add(*choices)
+
+        return ts
+
+
 
     def handle(self, *args, **options):
+        wipe = options.get('wipe', False)
+
         if options.get('talents'):
             self.stdout.write('Loading talents...')
 
@@ -86,6 +120,11 @@ class Command(BaseCommand):
             self.stdout.write('\nloading careers...')
 
         if options.get('careers'):
+            if wipe:
+                models.Career.objects.all().delete()
+                models.SkillSet.objects.all().delete()
+                models.TalentSet.objects.all().delete()
+
             for row in data.careers.DATA:
                 try:
                     instance = models.Career.objects.get(code=row['code'])
@@ -104,51 +143,11 @@ class Command(BaseCommand):
 
                 instance.exits.add(*exits)
 
-                # talents
                 for talent_set in talents:
-                    max_choices, names = self.parse_set(talent_set)
-                    kw = {'max_choices': max_choices}
-                    choices = []
-                    try:
-                        for name in names:
-                            try:
-                                choices.append(models.Talent.objects.get(code=name))
-                            except IndexError:
-                                pass
-                    except models.Talent.DoesNotExist:
-                        self.stdout.write('Warning: cannot find {0} talent'.format(talent_set))
-                    try:
-                        ts = models.TalentSet.objects.get(max_choices=max_choices, choices__id=choices[0].pk)
-                    except models.TalentSet.DoesNotExist:
-                        ts = models.TalentSet(max_choices=max_choices)
-                        ts.save()
-                    ts.choices.add(*choices)
+                    instance.talents.add(self.load_set(talent_set, models.Talent, models.TalentSet))
 
-                    instance.talents.add(ts)
-
-
-                # talents
                 for skill_set in skills:
-                    max_choices, names = self.parse_set(skill_set)
-                    kw = {'max_choices': max_choices}
-                    choices = []
-                    try:
-                        for name in names:
-                            try:
-                                choices.append(models.Skill.objects.get(code=name))
-                            except IndexError:
-                                pass
-                    except models.Talent.DoesNotExist:
-                        self.stdout.write('Warning: cannot find {0} skill'.format(skill_set))
-                    try:
-                        ts = models.SkillSet.objects.get(max_choices=max_choices, choices__id=choices[0].pk)
-                    except models.SkillSet.DoesNotExist:
-                        ts = models.SkillSet(max_choices=max_choices)
-                        ts.save()
-                    ts.choices.add(*choices)
-
-                    instance.skills.add(ts)
-
+                    instance.skills.add(self.load_set(skill_set, models.Skill, models.SkillSet))
 
                 self.stdout.write('Loaded {0} career'.format(instance.code))
 

@@ -42,7 +42,7 @@ DATA = [
     },
     {
         'code': 'artisan',
-        'name': 'artisan',
+        'name': 'Artisan',
         'description': '',
         'cc': 0,
         'ct': 0,

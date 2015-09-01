@@ -1,0 +1,21 @@
+{% load i18n %}
+<ul>
+    {% for e in sets %}
+        <li>
+            {% with choices=e.choices.all %}
+                {% if choices|length > 1 and e.max_choices > 1 %}
+                    {% blocktrans with amount=e.max_choices %}choose {{ amount }}{% endblocktrans %}&nbsp;:
+                {% endif %}
+                {% for choice in e.choices.all %}
+                    <a href="{{ choice.get_absolute_url }}">{{ choice.name }}</a>
+                        {% if not forloop.last %}
+                            {% if e.max_choices == 1 %}
+                            &nbsp;{% trans 'or' %}&nbsp;
+                            {% else %}, {% endif %}
+
+                        {% endif %}
+                {% endfor %}
+            {% endwith %}
+        </li>
+    {% endfor %}
+</ul>
