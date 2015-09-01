@@ -225,6 +225,16 @@ DATA = [
         'code': 'magie-mineure',
         'name': 'Magie mineure',
         'description': 'Vous connaissez un sort commun à tous les types de magie. La Magie mineure est un talent particulier. En réalité, il en existe plusieurs formes, chacune devant être acquise individuellement. Chaque talent de Magie mineure représente un sort séparé, dont le nom apparaît entre parenthèses. Par exemple, Magie mineure (dissipation) est différent de Magie mineure (marche dans les airs). Les sorts de Magie mineure les plus répandus sont les suivants :alarme magique, arme consacrée, armure aethyrique, dissipation, manipulation distante, marche dans les airs, silence et verrou magique. Reportez-vous au Chapitre 7 : La magie pour plus d’informations sur la Magie mineure et la description des divers sorts. Vous devez disposer d’un talent de Magie commune avant d’apprendre un talent de Magie mineure.',
+        'declinations': [
+            ('alarme-magique', 'Alarme magique'),
+            ('arme-consacree', 'Arme consacrée'),
+            ('armure-aethyrique', 'Armure aethyrique'),
+            ('dissipation', 'Dissipation'),
+            ('manipulation-distante', 'Manipulation distante'),
+            ('marche-dans-les-aires', 'Marche dans les airs'),
+            ('silence', 'Silence'),
+            ('verrou-magique', 'Verrou magique'),
+        ]
     },
     {
         'code': 'magie-noire',
@@ -250,6 +260,20 @@ DATA = [
         'code': 'maitrise-variable',
         'name': 'Maîtrise (variable)',
         'description': 'Vous êtes capable d’utiliser un type d’armes nécessitant une formation particulière. Le talent Maîtrise est inhabituel dans la mesure où il n’est pas unique, il en existe différentes formes, chacune devant être acquise séparément. Chaque talent de Maîtrise correspond à un type d’armes indiqué entre parenthèses. Par exemple, Maîtrise (armes à deux mains) est un talent différent de Maîtrise (armes de jet). Les types de Maîtrise les plus répandus sont les suivants : arbalètes, arcs longs, armes à feu, armes de cavalerie, armes de jet, armes de parade, armes d’escrime,armes lourdes, armes mécaniques,armes paralysantes, fléaux et lance-pierres. Pour plus de détails concernant ces groupes d’armes, reportez-vous au Chapitre 5 : L’équipement.',
+        'declinations': [
+            ('arbaletes', 'Arbalètes'),
+            ('arcs-longs', 'Arcs longs'),
+            ('armes-a-feu', 'Armes à feu'),
+            ('armes-de-cavalerie', 'Armes de cavalerie'),
+            ('armes-de-jet', 'Armes de jet'),
+            ('armes-de-parade', 'Armes de parade'),
+            ('armes-descrime', 'Armes d’escrime'),
+            ('armes-lourdes', 'Armes lourdes'),
+            ('armes-mecaniques', 'Armes mécaniques'),
+            ('armes-paralysantes', 'Armes paralysantes'),
+            ('fleaux', 'Fléaux'),
+            ('lances-pierres', 'Lance-pierres'),
+        ]
     },
     {
         'code': 'meditation',

@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
-
+from django.db.models import Count
 from malepierre import data
 from malepierre.characters import models
 
@@ -43,12 +43,14 @@ class Command(BaseCommand):
         kw = {'max_choices': max_choices}
         choices = model.objects.filter(code__in=names)
 
-        print(names, choices)
         if len(choices) != len(names):
             self.stdout.write('Warning: could not find all names: {0} {1}'.format(element_set, model))
         try:
-            queryset = self.filter_multiple_many(set_model.objects.all(), choices)
-            ts = queryset.get(max_choices=max_choices)
+            queryset = set_model.objects.annotate(choices_count=Count('choices'))
+            queryset = queryset.filter(choices_count=len(choices))
+            queryset = queryset.filter(max_choices=max_choices)
+            queryset = self.filter_multiple_many(queryset, choices)
+            ts = queryset.get()
         except set_model.DoesNotExist:
 
             ts = set_model(max_choices=max_choices)

@@ -7,6 +7,12 @@ DATA = [
         'attribute': 'intelligence',
         'description': 'Cette compétence permet de lire et de rédiger des messages secrets. Il existe plusieurs codes secrets utilisés dans l’Empire. Les alphabets secrets ne sont pas très sophistiqués et servent essentiellement à signaler un danger, désigner une cible, marquer une personne protégée, etc. Aucun test de compétence n’est requis pour déchiffrer des messages de base, mais le MJ peut en exiger pour déchiffrer des messages complexes ou dont les signes sont un peu effacés ou abîmés. À l’instar de Connaissances académiques,Alphabet secret n’est pas une compétence unique mais multiple. Les alphabets secrets les plus répandus sont les suivants : l’alphabet des pisteurs, l’alphabet des rôdeurs, l’alphabet des templiers et l’alphabet des voleurs.',
         'linked_talents': '',
+        'declinations': [
+            ('pisteur', 'Pisteurs'),
+            ('rodeur', 'Rôdeurs'),
+            ('templier', 'Templiers'),
+            ('voleur', 'Voleurs'),
+        ],
     },
     {
         'code': 'baratin',
