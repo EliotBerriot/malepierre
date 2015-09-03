@@ -86,7 +86,7 @@ DATA = [
         'description': 'Vous pouvez déformer votre corps au-delà des limites physiques possibles au commun des mortels. Vous bénéficiez d’un bonus de +10% aux tests d’Expression artistique en rapport avec ce talent, ainsi que d’un bonus de +20% aux tests d’Agilité destinés à vous libérer de liens serrés, à passer par de petites ouvertures, etc.',
     },
     {
-        'code': 'coups-assomants',
+        'code': 'coups-assommants',
         'name': 'Coups assommants',
         'description': 'Quand vous réussissez une attaque de corps à corps, vous pouvez tenter d’assommer votre adversaire au lieu d’infliger des dégâts.Vous devez tout d’abord effectuer un test de Force. En cas de succès, votre adversaire doit effectuer un test d’Endurance bénéficiant d’un bonus de +10% pour chaque PA à la tête. S’il échoue, votre adversaire est assommé pour 1d10 rounds. Les personnages assommés ne peuvent entreprendre aucune action et ne peuvent pas esquiver.',
     },

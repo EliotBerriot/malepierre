@@ -65,6 +65,8 @@ class Command(BaseCommand):
         wipe = options.get('wipe', False)
 
         if options.get('talents'):
+            if wipe:
+                models.Talent.objects.all().delete()
             self.stdout.write('Loading talents...')
 
             for row in data.talents.DATA:
@@ -90,6 +92,8 @@ class Command(BaseCommand):
 
 
         if options.get('skills'):
+            if wipe:
+                models.Skill.objects.all().delete()
             self.stdout.write('\nLoading skills...')
 
             for row in data.skills.DATA:
@@ -129,6 +133,8 @@ class Command(BaseCommand):
 
             exits_data = []
             for row in data.careers.DATA:
+                if len(args) > 0 and row['code'] not in args:
+                    continue
                 try:
                     instance = models.Career.objects.get(code=row['code'])
                 except models.Career.DoesNotExist:
@@ -159,5 +165,5 @@ class Command(BaseCommand):
                 exits = models.Career.objects.filter(code__in=exits_codes)
                 instance.exits.add(*exits)
 
-            self.stdout.write('Loaded exits {0} career'.format(instance.code))
+            self.stdout.write('Loaded exits')
         self.stdout.write('Data loaded')
