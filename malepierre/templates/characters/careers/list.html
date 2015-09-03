@@ -66,6 +66,14 @@
                         {% include 'characters/set_list.html' with sets=career.talents.all %}
 
                     </div>
+                    <div class="access">
+                        <h4>{% trans 'Access' %}</h4>
+                        <ul class="list-inline">
+                            {% for access in career.access.all %}
+                                <li><a href="{{ access.get_absolute_url }}">{{ access.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                     <div class="exits">
                         <h4>{% trans 'Exits' %}</h4>
                         <ul class="list-inline">

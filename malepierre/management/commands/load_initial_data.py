@@ -127,13 +127,14 @@ class Command(BaseCommand):
                 models.SkillSet.objects.all().delete()
                 models.TalentSet.objects.all().delete()
 
+            exits_data = []
             for row in data.careers.DATA:
                 try:
                     instance = models.Career.objects.get(code=row['code'])
                 except models.Career.DoesNotExist:
                     instance = models.Career()
 
-                exits = models.Career.objects.filter(code__in=row.pop('exits', []))
+                exits = row.pop('exits', [])
                 talents = row.pop('talents', [])
                 skills = row.pop('skills', [])
 
@@ -143,7 +144,7 @@ class Command(BaseCommand):
                     setattr(instance, field, row[field])
                 instance.save()
 
-                instance.exits.add(*exits)
+                exits_data.append((instance, exits))
 
                 for talent_set in talents:
                     instance.talents.add(self.load_set(talent_set, models.Talent, models.TalentSet))
@@ -153,4 +154,10 @@ class Command(BaseCommand):
 
                 self.stdout.write('Loaded {0} career'.format(instance.code))
 
+            # loading exits
+            for instance, exits_codes in exits_data:
+                exits = models.Career.objects.filter(code__in=exits_codes)
+                instance.exits.add(*exits)
+
+            self.stdout.write('Loaded exits {0} career'.format(instance.code))
         self.stdout.write('Data loaded')

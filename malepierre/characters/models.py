@@ -79,7 +79,7 @@ class SkillSet(AbstractSet):
 
 class Career(CodeMixin, NameMixin, DescriptionMixin):
 
-    exits = models.ManyToManyField('self', blank=True, symmetrical=False)
+    exits = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='access')
     talents = models.ManyToManyField(TalentSet, blank=True)
     skills = models.ManyToManyField(SkillSet, blank=True)
 
